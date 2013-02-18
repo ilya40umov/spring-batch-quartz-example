@@ -5,6 +5,6 @@
 */target/**
 
 # IDE files
-*/.idea/**
+.idea/**
 *.iml
 atlassian-ide-plugin.xml
