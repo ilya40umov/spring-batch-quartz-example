@@ -13,16 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch;
+package org.ilya40umov.batch.domain;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import java.util.Date;
 
 /**
  * @author ilya40umov
  */
-@Configuration
-@ComponentScan("org.ilya40umov.batch")
-public class BatchAppConfiguration
+public class User
 {
+    private Integer id;
+    private String login;
+    private Date created;
 }

@@ -13,16 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch;
+package org.ilya40umov.batch.service;
 
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.ilya40umov.batch.domain.User;
+
+import java.util.List;
 
 /**
  * @author ilya40umov
  */
-@Configuration
-@ComponentScan("org.ilya40umov.batch")
-public class BatchAppConfiguration
+public interface UserService
 {
+    List<User> findAllUsers();
+
+    /**
+     * returns sessionId
+     */
+    String login(String login);
+
+    void logout(String sessionId);
+
+    void goWalking(String sessionId);
+
+    void goChatting(String sessionId);
+
+    void goDancing(String sessionId);
+
+    void goIdle(String sessionId);
 }
