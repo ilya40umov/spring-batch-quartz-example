@@ -1,0 +1,10 @@
+# Igore instructions for Git #
+##############################
+
+# Maven files
+*/target/**
+
+# IDE files
+*/.idea/**
+*.iml
+atlassian-ide-plugin.xml
