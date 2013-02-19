@@ -19,9 +19,12 @@ import org.ilya40umov.batch.dao.UserDao;
 import org.ilya40umov.batch.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -37,12 +40,25 @@ public class UserDaoImpl implements UserDao
     @Override
     public List<User> findAllUsers()
     {
-        return null; // TODO implement
+        return jdbcTemplate.query("SELECT * FROM SBQ_USER", new UserRowMapper());
     }
 
     @Override
     public User findUserByLogin(String login)
     {
-        return null; // TODO implement
+        return jdbcTemplate.queryForObject("SELECT * FROM SBQ_USER WHERE LOGIN = ?", new UserRowMapper(), login);
     }
+
+    public class UserRowMapper implements RowMapper<User>
+    {
+        public User mapRow(ResultSet rs, int rowNum) throws SQLException
+        {
+            User user = new User();
+            user.setUserId(rs.getInt("USER_ID"));
+            user.setLogin(rs.getString("LOGIN"));
+            user.setCreated(rs.getDate("CREATED"));
+            return user;
+        }
+    }
+
 }
