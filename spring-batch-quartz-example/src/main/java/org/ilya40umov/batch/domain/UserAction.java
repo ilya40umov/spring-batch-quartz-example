@@ -23,8 +23,61 @@ import java.util.Date;
 public class UserAction
 {
     private int id;
+    private String sessionId;
     private ActionType action;
     private Date created;
+
+    public UserAction()
+    {
+
+    }
+
+    public UserAction(String sessionId, ActionType action, Date created)
+    {
+        this.sessionId = sessionId;
+        this.action = action;
+        this.created = created;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public String getSessionId()
+    {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId)
+    {
+        this.sessionId = sessionId;
+    }
+
+    public ActionType getAction()
+    {
+        return action;
+    }
+
+    public void setAction(ActionType action)
+    {
+        this.action = action;
+    }
+
+    public Date getCreated()
+    {
+        return created;
+    }
+
+    public void setCreated(Date created)
+    {
+        this.created = created;
+    }
 
     public static enum ActionType
     {

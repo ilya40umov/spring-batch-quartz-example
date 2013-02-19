@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch.tasks;
+package org.ilya40umov.batch.scheduler.init;
+
+import org.springframework.context.annotation.Configuration;
 
 /**
  * @author ilya40umov
  */
-public class CalculateOnlineMetricsTask
+@Configuration
+//@ImportResource()
+public class SchedulerInitializerConfiguration
 {
-    // this is a quartz job which should run every 15 secs calculating the following metrics:
-    // total number of users online, number of users jogging, chatting, dancing and idle.
-
-    // miss-fire handling(being offline): should catch up using historical data
-
-    // XXX should execute CalculateOnlineMetricsJob
 }

@@ -22,7 +22,48 @@ import java.util.Date;
  */
 public class User
 {
-    private Integer id;
+    private Integer userId;
     private String login;
     private Date created;
+
+    public User()
+    {
+
+    }
+
+    public User(String login, Date created)
+    {
+        this.login = login;
+        this.created = created;
+    }
+
+    public Integer getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(Integer userId)
+    {
+        this.userId = userId;
+    }
+
+    public String getLogin()
+    {
+        return login;
+    }
+
+    public void setLogin(String login)
+    {
+        this.login = login;
+    }
+
+    public Date getCreated()
+    {
+        return created;
+    }
+
+    public void setCreated(Date created)
+    {
+        this.created = created;
+    }
 }

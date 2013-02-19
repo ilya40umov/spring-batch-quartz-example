@@ -13,24 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch;
+package org.ilya40umov.batch.scheduler.init;
 
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.testng.annotations.Test;
 
 /**
  * @author ilya40umov
  */
-@Test
-public class TestBatchAppConfiguration
+public class SchedulerInitializer
 {
-    /**
-     * This test simply checks whether ApplicationContext can be initialized without errors.
-     */
-    public void testSpringContextStart()
+    private final ApplicationContext appCtx;
+    private final Scheduler scheduler;
+
+    public SchedulerInitializer()
     {
-        ApplicationContext ctx = new AnnotationConfigApplicationContext(BatchAppConfiguration.class);
+        super();
+        appCtx = new AnnotationConfigApplicationContext(SchedulerInitializerConfiguration.class);
+        scheduler = appCtx.getBean(Scheduler.class);
     }
 
+    public static void main(String[] args) throws SchedulerException
+    {
+        new SchedulerInitializer().invoke();
+    }
+
+    public void invoke() throws SchedulerException
+    {
+        scheduler.standby();
+    }
 }

@@ -13,16 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch;
+package org.ilya40umov.batch.scheduler.runner;
 
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
  * @author ilya40umov
  */
 @Configuration
-@ComponentScan("org.ilya40umov.batch")
-public class BatchAppConfiguration
+public class BatchScheduledProcessesConfiguration
 {
+
 }

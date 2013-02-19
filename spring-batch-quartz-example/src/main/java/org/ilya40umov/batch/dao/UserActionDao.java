@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch.tasks;
+package org.ilya40umov.batch.dao;
+
+import org.ilya40umov.batch.domain.UserAction;
 
 /**
  * @author ilya40umov
  */
-public class CalculateEventMetricsTask
+public interface UserActionDao
 {
-    // this is a quartz job which should run every 5 minutes calculating the following metrics:
-    // number of occurrences for each type of event for 5 last minutes
+    void insert(UserAction userAction);
 
-    // miss-fire handling(being offline): should catch up using historical data
-
-    // XXX should execute CalculateEventMetricsJob
 }

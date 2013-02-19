@@ -23,14 +23,71 @@ import java.util.Date;
 public class UserSession
 {
     private int id;
+    private int userId;
     private String sessionId;
     private Date startTime;
     private Date endTime;
-    private Browser browser;
 
-    public static enum Browser
+    public UserSession()
     {
-        IE, FF, OPERA, SAFARI, CHROME, UNKNOWN
+
     }
 
+    public UserSession(int userId, String sessionId, Date startTime, Date endTime)
+    {
+        this.userId = userId;
+        this.sessionId = sessionId;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public int getId()
+    {
+        return id;
+    }
+
+    public void setId(int id)
+    {
+        this.id = id;
+    }
+
+    public int getUserId()
+    {
+        return userId;
+    }
+
+    public void setUserId(int userId)
+    {
+        this.userId = userId;
+    }
+
+    public String getSessionId()
+    {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId)
+    {
+        this.sessionId = sessionId;
+    }
+
+    public Date getStartTime()
+    {
+        return startTime;
+    }
+
+    public void setStartTime(Date startTime)
+    {
+        this.startTime = startTime;
+    }
+
+    public Date getEndTime()
+    {
+        return endTime;
+    }
+
+    public void setEndTime(Date endTime)
+    {
+        this.endTime = endTime;
+    }
 }
