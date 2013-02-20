@@ -13,6 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.6</java.version>
         <!-- versions of dependencies -->
+        <spring.batch.version>2.1.9.RELEASE</spring.batch.version>
         <org.springframework.version>3.1.2.RELEASE</org.springframework.version>
         <org.slf4j.version>1.6.1</org.slf4j.version>
         <log4j.version>1.2.17</log4j.version>
@@ -129,6 +130,25 @@
             <groupId>commons-dbcp</groupId>
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
+        </dependency>
+
+        <!-- Spring Batch dependencies -->
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-core</artifactId>
+            <version>${spring.batch.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-infrastructure</artifactId>
+            <version>${spring.batch.version}</version>
+        </dependency>
+        <!-- test scoped dependencies -->
+        <dependency>
+            <groupId>org.springframework.batch</groupId>
+            <artifactId>spring-batch-test</artifactId>
+            <version>${spring.batch.version}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

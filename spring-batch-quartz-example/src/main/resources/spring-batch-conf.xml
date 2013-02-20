@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:batch="http://www.springframework.org/schema/batch"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/batch
+                           http://www.springframework.org/schema/batch/spring-batch.xsd">
+
+    <bean id="jobRepository"
+          class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="transactionManager" ref="transactionManager"/>
+        <property name="databaseType" value="mysql"/>
+        <property name="tablePrefix" value="BATCH_"/>
+    </bean>
+
+    <bean id="jobLauncher" class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+        <property name="jobRepository" ref="jobRepository"/>
+    </bean>
+
+    <bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="tablePrefix" value="BATCH_"/>
+    </bean>
+
+    <bean id="jobOperator" class="org.springframework.batch.core.launch.support.SimpleJobOperator">
+        <property name="jobRepository" ref="jobRepository"></property>
+        <property name="jobRegistry" ref="jobRegistry"></property>
+        <property name="jobExplorer" ref="jobExplorer"></property>
+        <property name="jobLauncher" ref="jobLauncher"></property>
+    </bean>
+
+    <bean id="jobRegistry"
+          class="org.springframework.batch.core.configuration.support.MapJobRegistry"/>
+
+    <bean
+            class="org.springframework.batch.core.configuration.support.JobRegistryBeanPostProcessor">
+        <property name="jobRegistry" ref="jobRegistry"/>
+    </bean>
+
+    <bean id="calculateEventMetricsTask" class="org.ilya40umov.batch.tasks.CalculateEventMetricsTask"/>
+    <bean id="calculateOnlineMetricsTask" class="org.ilya40umov.batch.tasks.CalculateOnlineMetricsTask"/>
+
+    <batch:job id="calculateEventMetricsJob">
+        <batch:step id="calculateEventMetrics">
+            <tasklet ref="calculateEventMetricsTask"/>
+        </batch:step>
+    </batch:job>
+
+    <batch:job id="calculateOnlineMetricsJob" xmlns="http://www.springframework.org/schema/batch">
+        <batch:step id="calculateOnlineMetrics">
+            <tasklet ref="calculateOnlineMetricsTask"/>
+        </batch:step>
+    </batch:job>
+
+</beans>

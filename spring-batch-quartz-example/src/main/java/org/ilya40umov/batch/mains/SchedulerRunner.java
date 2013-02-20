@@ -16,8 +16,8 @@
 package org.ilya40umov.batch.mains;
 
 import org.ilya40umov.batch.configurations.SchedulerRunnerConfiguration;
-import org.ilya40umov.batch.tasks.CalculateEventMetricsTask;
-import org.ilya40umov.batch.tasks.CalculateOnlineMetricsTask;
+import org.ilya40umov.batch.scheduled.CalculateEventMetricsScheduledJob;
+import org.ilya40umov.batch.scheduled.CalculateOnlineMetricsScheduledJob;
 import org.quartz.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -51,34 +51,36 @@ public class SchedulerRunner
 
     public void invoke() throws SchedulerException
     {
-        scheduleCalculateEventMetricsTask();
-        scheduleCalculateOnlineMetricsTask();
+        scheduleCalculateEvent();
+        scheduleCalculateOnlineMetrics();
         scheduler.start();
     }
 
-    private void scheduleCalculateEventMetricsTask() throws SchedulerException
+    private void scheduleCalculateEvent() throws SchedulerException
     {
-        JobDetail job = newJob(CalculateEventMetricsTask.class)
-                .withIdentity("calculateEventMetricsTask", "MetricsCollectors")
+        JobDetail job = newJob(CalculateEventMetricsScheduledJob.class)
+                .withIdentity("calculateEventMetricsScheduledJob", "MetricsCollectors")
                 .requestRecovery(false)
                 .build();
         CronTrigger trigger = newTrigger()
-                .withIdentity("triggerFor_calculateEventMetricsTask", "MetricsCollectors")
-                .withSchedule(cronSchedule("0 0/5 * * * ?").inTimeZone(TimeZone.getTimeZone("UTC")))
+                .withIdentity("triggerFor_calculateEventMetricsScheduledJob", "MetricsCollectors")
+                .withSchedule(cronSchedule("0 0/5 * * * ?").inTimeZone(TimeZone.getTimeZone("UTC"))
+                                      .withMisfireHandlingInstructionFireAndProceed())
                 .forJob(job.getKey())
                 .build();
         scheduleJobWithTriggerIfNotPresent(job, trigger);
     }
 
-    private void scheduleCalculateOnlineMetricsTask() throws SchedulerException
+    private void scheduleCalculateOnlineMetrics() throws SchedulerException
     {
-        JobDetail job = newJob(CalculateOnlineMetricsTask.class)
-                .withIdentity("calculateOnlineMetricsTask", "MetricsCollectors")
+        JobDetail job = newJob(CalculateOnlineMetricsScheduledJob.class)
+                .withIdentity("calculateOnlineMetricsScheduledJob", "MetricsCollectors")
                 .requestRecovery(false)
                 .build();
         CronTrigger trigger = newTrigger()
-                .withIdentity("triggerFor_calculateOnlineMetricsTask", "MetricsCollectors")
-                .withSchedule(cronSchedule("0/15 * * * * ?").inTimeZone(TimeZone.getTimeZone("UTC")))
+                .withIdentity("triggerFor_calculateOnlineMetricsScheduledJob", "MetricsCollectors")
+                .withSchedule(cronSchedule("0/15 * * * * ?").inTimeZone(TimeZone.getTimeZone("UTC"))
+                                      .withMisfireHandlingInstructionFireAndProceed())
                 .forJob(job.getKey())
                 .build();
         scheduleJobWithTriggerIfNotPresent(job, trigger);

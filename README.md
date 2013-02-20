@@ -23,23 +23,19 @@ You should run only one instance of this class(meaning that this part does not d
 
 ## Solved Problems ##
 
-Q: How do I make sure that if one node goes down, my scheduled tasks will keep being executed?
-
-A: Quartz will be running on each machine with DB-backed JobStore. Thus even is one node is down all other nodes will keep doing the work.
-
+Q: How do I make sure that if one node goes down, my scheduled tasks will keep being executed? <br/>
+A: Quartz will be running on each machine with DB-backed JobStore. Thus even is one node is down all other nodes will keep doing the work. <br/>
 Test: Start several instances of SchedulerRunner. Watch them executing jobs. Kill some of them. See how load is spread between the nodes which left
- running.
+ running.<br/>
 
-Q: How do I make sure that if a node executing a certain job goes down, the job is repeated/re-started if needed.
-
-A: ... (?Quartz requestRecovery feature or Spring Batch ?)
-
-Test: ...
+Q: How do I make sure that if a node executing a certain job goes down, the job is repeated/re-started if needed.<br/>
+A: ... (?Quartz requestRecovery feature or Spring Batch ?)<br/>
+Test: ...<br/>
 
 Q: If all nodes go down and then at least one is back online, how do I make sure that all of missed job executions(for particular jobs which are
-sensitive on this matter) are invoked?
+sensitive on this matter) are invoked?<br/>
 
-Q: How do I know which jobs are being executed at the moment and how can I review the history of all executions?
+Q: How do I know which jobs are being executed at the moment and how can I review the history of all executions?<br/>
 
-Q: How can I signal to all nodes to stop, so that I can deploy a new version of software, do maintenance etc.?
+Q: How can I signal to all nodes to stop, so that I can deploy a new version of software, do maintenance etc.?<br/>
 

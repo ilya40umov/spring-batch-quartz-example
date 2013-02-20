@@ -15,23 +15,28 @@
  */
 package org.ilya40umov.batch.tasks;
 
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.repeat.RepeatStatus;
 
 /**
  * @author ilya40umov
  */
-public class CalculateEventMetricsTask extends AbstractScheduledTask
+public class CalculateEventMetricsTask implements Tasklet
 {
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException
+    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception
     {
-        System.out.println(">>>> CalculateEventMetricsTask.execute()");
+        System.out.println(">>>> CalculateEventMetricsScheduledJob.execute()");
+        return RepeatStatus.FINISHED;
     }
+
     // this is a quartz job which should run every 5 minutes calculating the following metrics:
     // number of occurrences for each type of event for 5 last minutes
 
     // miss-fire handling(being offline): should catch up using historical data
 
     // XXX should execute CalculateEventMetricsJob
+
 }

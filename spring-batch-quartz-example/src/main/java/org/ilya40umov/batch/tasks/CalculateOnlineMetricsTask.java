@@ -15,18 +15,22 @@
  */
 package org.ilya40umov.batch.tasks;
 
-import org.quartz.JobExecutionContext;
-import org.quartz.JobExecutionException;
+import org.springframework.batch.core.StepContribution;
+import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.repeat.RepeatStatus;
 
 /**
  * @author ilya40umov
  */
-public class CalculateOnlineMetricsTask extends AbstractScheduledTask
+public class CalculateOnlineMetricsTask implements Tasklet
 {
+
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException
+    public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception
     {
-        System.out.println(">>>> CalculateOnlineMetricsTask.execute()");
+        System.out.println(">>>> CalculateOnlineMetricsScheduledJob.execute()");
+        return RepeatStatus.FINISHED;
     }
 
     // this is a quartz job which should run every 15 secs calculating the following metrics:
