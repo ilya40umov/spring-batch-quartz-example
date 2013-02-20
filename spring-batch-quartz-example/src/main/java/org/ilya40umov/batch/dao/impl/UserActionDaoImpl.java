@@ -35,6 +35,7 @@ public class UserActionDaoImpl implements UserActionDao
     @Override
     public void insert(UserAction userAction)
     {
-        // TODO implement
+        String sql = "INSERT INTO SBQ_USER_ACTION (USER_SESSION_ID, ACTION, CREATED) VALUES (?, ?, NOW())";
+        jdbcTemplate.update(sql, new Object[]{userAction.getUserSessionId(), userAction.getAction().toString()});
     }
 }

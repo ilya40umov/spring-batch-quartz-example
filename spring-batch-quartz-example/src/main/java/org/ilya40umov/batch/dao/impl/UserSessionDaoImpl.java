@@ -19,9 +19,12 @@ import org.ilya40umov.batch.dao.UserSessionDao;
 import org.ilya40umov.batch.domain.UserSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 
 /**
@@ -37,12 +40,36 @@ public class UserSessionDaoImpl implements UserSessionDao
     @Override
     public void insert(UserSession userSession)
     {
-        // TODO implement
+        String sql = "INSERT INTO SBQ_USER_SESSION (USER_ID, SESSION_ID, START_TIME) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, new Object[]{userSession.getUserId(), userSession.getSessionId(),
+                new java.sql.Date(userSession.getStartTime().getTime())
+        });
+    }
+
+    @Override
+    public UserSession findUserSessionBySessionId(String sessionId)
+    {
+        return jdbcTemplate.queryForObject("SELECT * FROM SBQ_USER_SESSION WHERE SESSION_ID = ?", new UserSessionRowMapper(), sessionId);
     }
 
     @Override
     public void updateEndTime(String sessionId, Date endTime)
     {
-        // TODO implement
+        String sql = "UPDATE SBQ_USER_SESSION SET END_TIME = ? WHERE SESSION_ID = ?";
+        jdbcTemplate.update(sql, new Object[]{endTime, sessionId});
+    }
+
+    public class UserSessionRowMapper implements RowMapper<UserSession>
+    {
+        public UserSession mapRow(ResultSet rs, int rowNum) throws SQLException
+        {
+            UserSession userSession = new UserSession();
+            userSession.setUserSessionId(rs.getInt("USER_SESSION_ID"));
+            userSession.setUserId(rs.getInt("USER_ID"));
+            userSession.setSessionId(rs.getString("SESSION_ID"));
+            userSession.setStartTime(rs.getDate("START_TIME"));
+            userSession.setEndTime(rs.getDate("END_TIME"));
+            return userSession;
+        }
     }
 }

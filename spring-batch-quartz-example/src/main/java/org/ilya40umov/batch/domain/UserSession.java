@@ -22,7 +22,7 @@ import java.util.Date;
  */
 public class UserSession
 {
-    private int id;
+    private int userSessionId;
     private int userId;
     private String sessionId;
     private Date startTime;
@@ -41,14 +41,14 @@ public class UserSession
         this.endTime = endTime;
     }
 
-    public int getId()
+    public int getUserSessionId()
     {
-        return id;
+        return userSessionId;
     }
 
-    public void setId(int id)
+    public void setUserSessionId(int userSessionId)
     {
-        this.id = id;
+        this.userSessionId = userSessionId;
     }
 
     public int getUserId()

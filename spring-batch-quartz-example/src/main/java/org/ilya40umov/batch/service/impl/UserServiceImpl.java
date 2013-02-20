@@ -62,7 +62,8 @@ public class UserServiceImpl implements UserService
         {
             String sessionId = UUID.randomUUID().toString();
             userSessionDao.insert(new UserSession(user.getUserId(), sessionId, now, null));
-            userActionDao.insert(new UserAction(sessionId, UserAction.ActionType.DO_LOGIN, now));
+            int userSessionId = userSessionDao.findUserSessionBySessionId(sessionId).getUserSessionId();
+            userActionDao.insert(new UserAction(userSessionId, UserAction.ActionType.DO_LOGIN, now));
             return sessionId;
         } else
         {
@@ -74,7 +75,8 @@ public class UserServiceImpl implements UserService
     public void logout(String sessionId)
     {
         Date now = new Date();
-        userActionDao.insert(new UserAction(sessionId, UserAction.ActionType.DO_LOGOUT, now));
+        int userSessionId = userSessionDao.findUserSessionBySessionId(sessionId).getUserSessionId();
+        userActionDao.insert(new UserAction(userSessionId, UserAction.ActionType.DO_LOGOUT, now));
         userSessionDao.updateEndTime(sessionId, now);
     }
 
@@ -82,27 +84,31 @@ public class UserServiceImpl implements UserService
     public void goWalking(String sessionId)
     {
         Date now = new Date();
-        userActionDao.insert(new UserAction(sessionId, UserAction.ActionType.GO_WALKING, now));
+        int userSessionId = userSessionDao.findUserSessionBySessionId(sessionId).getUserSessionId();
+        userActionDao.insert(new UserAction(userSessionId, UserAction.ActionType.GO_WALKING, now));
     }
 
     @Override
     public void goChatting(String sessionId)
     {
         Date now = new Date();
-        userActionDao.insert(new UserAction(sessionId, UserAction.ActionType.GO_CHATTING, now));
+        int userSessionId = userSessionDao.findUserSessionBySessionId(sessionId).getUserSessionId();
+        userActionDao.insert(new UserAction(userSessionId, UserAction.ActionType.GO_CHATTING, now));
     }
 
     @Override
     public void goDancing(String sessionId)
     {
         Date now = new Date();
-        userActionDao.insert(new UserAction(sessionId, UserAction.ActionType.GO_DANCING, now));
+        int userSessionId = userSessionDao.findUserSessionBySessionId(sessionId).getUserSessionId();
+        userActionDao.insert(new UserAction(userSessionId, UserAction.ActionType.GO_DANCING, now));
     }
 
     @Override
     public void goIdle(String sessionId)
     {
         Date now = new Date();
-        userActionDao.insert(new UserAction(sessionId, UserAction.ActionType.GO_IDLE, now));
+        int userSessionId = userSessionDao.findUserSessionBySessionId(sessionId).getUserSessionId();
+        userActionDao.insert(new UserAction(userSessionId, UserAction.ActionType.GO_IDLE, now));
     }
 }

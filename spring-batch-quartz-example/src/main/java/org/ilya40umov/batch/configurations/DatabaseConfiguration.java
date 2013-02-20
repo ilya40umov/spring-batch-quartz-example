@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
 import javax.sql.DataSource;
+import java.sql.Connection;
 
 /**
  * @author ilya40umov
@@ -60,6 +61,7 @@ public class DatabaseConfiguration
         dataSource.setMaxWait(10000);
         dataSource.setInitialSize(5);
         dataSource.setValidationQuery("SELECT 1");
+        dataSource.setDefaultTransactionIsolation(Connection.TRANSACTION_READ_COMMITTED);
         return dataSource;
     }
 

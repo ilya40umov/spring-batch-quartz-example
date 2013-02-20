@@ -22,8 +22,8 @@ import java.util.Date;
  */
 public class UserAction
 {
-    private int id;
-    private String sessionId;
+    private int userActionId;
+    private int userSessionId;
     private ActionType action;
     private Date created;
 
@@ -32,31 +32,31 @@ public class UserAction
 
     }
 
-    public UserAction(String sessionId, ActionType action, Date created)
+    public UserAction(int userSessionId, ActionType action, Date created)
     {
-        this.sessionId = sessionId;
+        this.userSessionId = userSessionId;
         this.action = action;
         this.created = created;
     }
 
-    public int getId()
+    public int getUserActionId()
     {
-        return id;
+        return userActionId;
     }
 
-    public void setId(int id)
+    public void setUserActionId(int userActionId)
     {
-        this.id = id;
+        this.userActionId = userActionId;
     }
 
-    public String getSessionId()
+    public int getUserSessionId()
     {
-        return sessionId;
+        return userSessionId;
     }
 
-    public void setSessionId(String sessionId)
+    public void setUserSessionId(int userSessionId)
     {
-        this.sessionId = sessionId;
+        this.userSessionId = userSessionId;
     }
 
     public ActionType getAction()

@@ -27,6 +27,8 @@ public interface UserSessionDao
 
     void insert(UserSession userSession);
 
+    UserSession findUserSessionBySessionId(String sessionId);
+
     void updateEndTime(String sessionId, Date endTime);
 
 }
