@@ -13,20 +13,16 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch.configurations;
+package org.ilya40umov.batch.tasks;
 
-import org.ilya40umov.batch.configurations.DatabaseConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
+import org.quartz.Job;
+
+import java.io.Serializable;
 
 /**
  * @author ilya40umov
  */
-@Configuration
-@Import(DatabaseConfiguration.class)
-@ComponentScan({"org.ilya40umov.batch.scheduler"})
-public class SchedulerInitializerConfiguration
+public abstract class AbstractScheduledTask implements Job
 {
 
 }

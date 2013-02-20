@@ -15,11 +15,20 @@
  */
 package org.ilya40umov.batch.tasks;
 
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+
 /**
  * @author ilya40umov
  */
-public class CalculateOnlineMetricsTask
+public class CalculateOnlineMetricsTask extends AbstractScheduledTask
 {
+    @Override
+    public void execute(JobExecutionContext context) throws JobExecutionException
+    {
+        System.out.println(">>>> CalculateOnlineMetricsTask.execute()");
+    }
+
     // this is a quartz job which should run every 15 secs calculating the following metrics:
     // total number of users online, number of users jogging, chatting, dancing and idle.
 

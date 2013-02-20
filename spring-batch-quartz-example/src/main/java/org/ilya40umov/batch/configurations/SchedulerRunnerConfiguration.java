@@ -15,13 +15,17 @@
  */
 package org.ilya40umov.batch.configurations;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author ilya40umov
  */
 @Configuration
-public class BatchScheduledProcessesConfiguration
+@Import(DatabaseConfiguration.class)
+@ComponentScan({"org.ilya40umov.batch.scheduler"})
+public class SchedulerRunnerConfiguration
 {
 
 }

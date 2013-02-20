@@ -15,11 +15,19 @@
  */
 package org.ilya40umov.batch.tasks;
 
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+
 /**
  * @author ilya40umov
  */
-public class CalculateEventMetricsTask
+public class CalculateEventMetricsTask extends AbstractScheduledTask
 {
+    @Override
+    public void execute(JobExecutionContext context) throws JobExecutionException
+    {
+        System.out.println(">>>> CalculateEventMetricsTask.execute()");
+    }
     // this is a quartz job which should run every 5 minutes calculating the following metrics:
     // number of occurrences for each type of event for 5 last minutes
 
