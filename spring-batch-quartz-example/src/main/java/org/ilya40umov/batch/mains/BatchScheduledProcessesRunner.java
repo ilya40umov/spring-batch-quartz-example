@@ -13,35 +13,42 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch.scheduler.init;
+package org.ilya40umov.batch.mains;
 
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
+import org.ilya40umov.batch.configurations.BatchScheduledProcessesConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * @author ilya40umov
  */
-public class SchedulerInitializer
+public class BatchScheduledProcessesRunner
 {
     private final ApplicationContext appCtx;
-    private final Scheduler scheduler;
 
-    public SchedulerInitializer()
+    public BatchScheduledProcessesRunner()
     {
         super();
-        appCtx = new AnnotationConfigApplicationContext(SchedulerInitializerConfiguration.class);
-        scheduler = appCtx.getBean(Scheduler.class);
+        appCtx = new AnnotationConfigApplicationContext(BatchScheduledProcessesConfiguration.class);
     }
 
-    public static void main(String[] args) throws SchedulerException
+    public static void main(String[] args)
     {
-        new SchedulerInitializer().invoke();
+        BatchScheduledProcessesRunner batchScheduledProcessesRunner = new BatchScheduledProcessesRunner();
+        batchScheduledProcessesRunner.invoke();
     }
 
-    public void invoke() throws SchedulerException
+    public void invoke()
     {
-        scheduler.standby();
+        while (!Thread.currentThread().isInterrupted())
+        {
+            try
+            {
+                Thread.sleep(1000L);
+            } catch (InterruptedException e)
+            {
+                Thread.interrupted();
+            }
+        }
     }
 }

@@ -22,6 +22,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.LazyConnectionDataSourceProxy;
+import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
@@ -36,7 +37,7 @@ import java.sql.Connection;
 public class DatabaseConfiguration
 {
     @Bean
-    public AbstractPlatformTransactionManager transactionManager()
+    public PlatformTransactionManager transactionManager()
     {
         return new DataSourceTransactionManager(dataSource());
     }

@@ -13,17 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch.scheduler.tasks;
+package org.ilya40umov.batch.configurations;
+
+import org.ilya40umov.batch.configurations.DatabaseConfiguration;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author ilya40umov
  */
-public class CalculateEventMetricsTask
+@Configuration
+@ComponentScan({"org.ilya40umov.batch.service", "org.ilya40umov.batch.dao"})
+@Import(DatabaseConfiguration.class)
+public class ActivityEmulatorConfiguration
 {
-    // this is a quartz job which should run every 5 minutes calculating the following metrics:
-    // number of occurrences for each type of event for 5 last minutes
-
-    // miss-fire handling(being offline): should catch up using historical data
-
-    // XXX should execute CalculateEventMetricsJob
 }

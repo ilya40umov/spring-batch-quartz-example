@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch.emulator;
+package org.ilya40umov.batch.mains;
 
 import org.ilya40umov.batch.domain.User;
+import org.ilya40umov.batch.configurations.ActivityEmulatorConfiguration;
 import org.ilya40umov.batch.service.UserService;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;

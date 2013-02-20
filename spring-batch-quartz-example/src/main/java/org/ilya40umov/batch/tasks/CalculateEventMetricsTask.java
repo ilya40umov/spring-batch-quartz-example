@@ -13,15 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.ilya40umov.batch.scheduler.runner;
-
-import org.springframework.context.annotation.Configuration;
+package org.ilya40umov.batch.tasks;
 
 /**
  * @author ilya40umov
  */
-@Configuration
-public class BatchScheduledProcessesConfiguration
+public class CalculateEventMetricsTask
 {
+    // this is a quartz job which should run every 5 minutes calculating the following metrics:
+    // number of occurrences for each type of event for 5 last minutes
 
+    // miss-fire handling(being offline): should catch up using historical data
+
+    // XXX should execute CalculateEventMetricsJob
 }
