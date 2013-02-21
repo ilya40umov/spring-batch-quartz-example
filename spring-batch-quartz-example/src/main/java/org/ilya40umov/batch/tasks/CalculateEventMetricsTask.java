@@ -35,7 +35,9 @@ public class CalculateEventMetricsTask implements Tasklet
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception
     {
-        metricsService.calculateEventMetrics(new Date(), new Date());
+        Date startingFrom = (Date) chunkContext.getStepContext().getJobParameters().get("startingFrom");
+        Date endingAt = (Date) chunkContext.getStepContext().getJobParameters().get("endingAt");
+        metricsService.calculateEventMetrics(startingFrom, endingAt);
         return RepeatStatus.FINISHED;
     }
 

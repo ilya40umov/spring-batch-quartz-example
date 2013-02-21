@@ -35,7 +35,8 @@ public class CalculateOnlineMetricsTask implements Tasklet
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception
     {
-        metricsService.calculateOnlineMetrics(new Date());
+        Date scheduledFireTime = (Date) chunkContext.getStepContext().getJobParameters().get("scheduledFireTime");
+        metricsService.calculateOnlineMetrics(scheduledFireTime);
         return RepeatStatus.FINISHED;
     }
 

@@ -68,6 +68,7 @@ public class SchedulerRunner
                                       .withMisfireHandlingInstructionFireAndProceed())
                 .forJob(job.getKey())
                 .build();
+        trigger.getJobDataMap().putAsString("finishedAt", System.currentTimeMillis());
         scheduleJobWithTriggerIfNotPresent(job, trigger);
     }
 
@@ -80,7 +81,7 @@ public class SchedulerRunner
         CronTrigger trigger = newTrigger()
                 .withIdentity("triggerFor_calculateOnlineMetricsScheduledJob", "MetricsCollectors")
                 .withSchedule(cronSchedule("0/15 * * * * ?").inTimeZone(TimeZone.getTimeZone("UTC"))
-                                      .withMisfireHandlingInstructionFireAndProceed())
+                                      .withMisfireHandlingInstructionIgnoreMisfires())
                 .forJob(job.getKey())
                 .build();
         scheduleJobWithTriggerIfNotPresent(job, trigger);

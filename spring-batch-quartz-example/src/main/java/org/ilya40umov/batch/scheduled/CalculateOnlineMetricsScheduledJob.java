@@ -15,10 +15,8 @@
  */
 package org.ilya40umov.batch.scheduled;
 
-import org.quartz.DisallowConcurrentExecution;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
-import org.quartz.PersistJobDataAfterExecution;
 import org.springframework.batch.core.JobParameter;
 import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.configuration.JobRegistry;
@@ -30,8 +28,8 @@ import java.util.Map;
 /**
  * @author ilya40umov
  */
-@DisallowConcurrentExecution // TODO make sure we need this
-@PersistJobDataAfterExecution // TODO make sure we need this
+// @DisallowConcurrentExecution - no need for this because jobs don't intersect
+// @PersistJobDataAfterExecution - don't store any data between executions
 public class CalculateOnlineMetricsScheduledJob extends AbstractScheduledJob
 {
     @Override

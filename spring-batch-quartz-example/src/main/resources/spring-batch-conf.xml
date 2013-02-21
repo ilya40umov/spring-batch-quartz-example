@@ -56,8 +56,36 @@
 
     <aop:aspectj-autoproxy/>
 
+    <bean id="taskBatchRetryTemplate" class="org.springframework.batch.retry.support.RetryTemplate">
+        <property name="retryPolicy" ref="taskBatchRetryPolicy"/>
+        <property name="backOffPolicy" ref="ExponentialBackOffPolicy"/>
+    </bean>
+
+    <bean id="taskBatchRetryPolicy" class="org.springframework.batch.retry.policy.SimpleRetryPolicy">
+        <constructor-arg index="0" value="5"/>
+        <constructor-arg index="1">
+            <map>
+                <entry key="java.lang.RuntimeException" value="true"/>
+            </map>
+        </constructor-arg>
+    </bean>
+
+    <bean id="ExponentialBackOffPolicy" class="org.springframework.batch.retry.backoff.ExponentialBackOffPolicy">
+        <property name="initialInterval" value="300">
+            <description>Initial sleep interval value, default 300 ms</description>
+        </property>
+        <property name="maxInterval" value="30000">
+            <description>The maximum value of the backoff period in milliseconds.</description>
+        </property>
+        <property name="multiplier" value="2.0">
+            <description>The value to increment the exp seed with for each retry attempt.</description>
+        </property>
+    </bean>
+
     <bean id="retryAdvice"
-          class="org.springframework.batch.retry.interceptor.RetryOperationsInterceptor"/>
+          class="org.springframework.batch.retry.interceptor.RetryOperationsInterceptor">
+        <property name="RetryOperations" ref="taskBatchRetryTemplate"/>
+    </bean>
 
     <aop:config>
         <aop:pointcut id="anyExecutionOfTask"

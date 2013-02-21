@@ -24,31 +24,35 @@ import org.springframework.batch.core.JobParameters;
 import org.springframework.batch.core.configuration.JobRegistry;
 import org.springframework.batch.core.launch.JobLauncher;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
  * @author ilya40umov
  */
-@DisallowConcurrentExecution // TODO make sure we need this
-@PersistJobDataAfterExecution // TODO make sure we need this
+@DisallowConcurrentExecution // because we store job state between executions
+@PersistJobDataAfterExecution // because we store last fire time between executions
 public class CalculateEventMetricsScheduledJob extends AbstractScheduledJob
 {
-
     @Override
     protected void executeInternal(JobExecutionContext context) throws JobExecutionException
     {
         JobRegistry jobRegistry = getJobRegistry();
         JobLauncher jobLauncher = getJobLauncher();
+        long finishedAt = context.getMergedJobDataMap().getLong("finishedAt");
+        Date startingFrom = new Date(finishedAt);
+        Date endingAt = new Date();
         Map<String, JobParameter> parameters = new HashMap<String, JobParameter>();
-        parameters.put("scheduledFireTime", new JobParameter(context.getScheduledFireTime()));
+        parameters.put("startingFrom", new JobParameter(startingFrom));
+        parameters.put("endingAt", new JobParameter(endingAt));
         try
         {
             jobLauncher.run(jobRegistry.getJob("calculateEventMetricsJob"), new JobParameters(parameters));
+            context.getMergedJobDataMap().putAsString("finishedAt", endingAt.getTime());
         } catch (Exception e)
         {
             throw new JobExecutionException(e);
         }
     }
-
 }
