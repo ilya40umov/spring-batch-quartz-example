@@ -32,6 +32,11 @@ public abstract class AbstractScheduledJob extends QuartzJobBean
         this.applicationContext = applicationContext;
     }
 
+    protected ApplicationContext getApplicationContext()
+    {
+        return applicationContext;
+    }
+
     protected JobRegistry getJobRegistry()
     {
         return applicationContext.getBean(JobRegistry.class);

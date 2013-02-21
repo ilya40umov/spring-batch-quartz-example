@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:batch="http://www.springframework.org/schema/batch"
+       xmlns:batch="http://www.springframework.org/schema/batch" xmlns:aop="http://www.springframework.org/schema/aop"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://www.springframework.org/schema/batch
-                           http://www.springframework.org/schema/batch/spring-batch.xsd">
+                           http://www.springframework.org/schema/batch/spring-batch.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <bean id="jobRepository"
           class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean">
@@ -53,5 +53,18 @@
             <tasklet ref="calculateOnlineMetricsTask"/>
         </batch:step>
     </batch:job>
+
+    <aop:aspectj-autoproxy/>
+
+    <bean id="retryAdvice"
+          class="org.springframework.batch.retry.interceptor.RetryOperationsInterceptor"/>
+
+    <aop:config>
+        <aop:pointcut id="anyExecutionOfTask"
+                      expression="execution(* org.ilya40umov.batch.service..*.*(..))"/>
+        <aop:advisor pointcut-ref="anyExecutionOfTask"
+                     advice-ref="retryAdvice" order="-1"/>
+    </aop:config>
+
 
 </beans>

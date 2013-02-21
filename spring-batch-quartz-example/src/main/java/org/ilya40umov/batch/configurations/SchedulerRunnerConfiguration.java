@@ -24,7 +24,7 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({DatabaseConfiguration.class, SpringBatchConfiguration.class})
-@ComponentScan({"org.ilya40umov.batch.scheduler"})
+@ComponentScan({"org.ilya40umov.batch.scheduler", "org.ilya40umov.batch.service", "org.ilya40umov.batch.dao"})
 public class SchedulerRunnerConfiguration
 {
 

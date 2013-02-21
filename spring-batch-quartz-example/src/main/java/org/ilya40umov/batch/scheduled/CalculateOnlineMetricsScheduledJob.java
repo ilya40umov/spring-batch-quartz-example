@@ -43,7 +43,7 @@ public class CalculateOnlineMetricsScheduledJob extends AbstractScheduledJob
         parameters.put("scheduledFireTime", new JobParameter(context.getScheduledFireTime()));
         try
         {
-            jobLauncher.run(jobRegistry.getJob("calculateEventMetricsJob"), new JobParameters(parameters));
+            jobLauncher.run(jobRegistry.getJob("calculateOnlineMetricsJob"), new JobParameters(parameters));
         } catch (Exception e)
         {
             throw new JobExecutionException(e);

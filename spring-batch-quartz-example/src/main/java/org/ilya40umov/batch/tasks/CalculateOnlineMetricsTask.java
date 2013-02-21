@@ -15,28 +15,28 @@
  */
 package org.ilya40umov.batch.tasks;
 
+import org.ilya40umov.batch.service.MetricsService;
 import org.springframework.batch.core.StepContribution;
 import org.springframework.batch.core.scope.context.ChunkContext;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Date;
 
 /**
  * @author ilya40umov
  */
 public class CalculateOnlineMetricsTask implements Tasklet
 {
+    @Autowired
+    private MetricsService metricsService;
 
     @Override
     public RepeatStatus execute(StepContribution stepContribution, ChunkContext chunkContext) throws Exception
     {
-        System.out.println(">>>> CalculateOnlineMetricsScheduledJob.execute()");
+        metricsService.calculateOnlineMetrics(new Date());
         return RepeatStatus.FINISHED;
     }
 
-    // this is a quartz job which should run every 15 secs calculating the following metrics:
-    // total number of users online, number of users jogging, chatting, dancing and idle.
-
-    // miss-fire handling(being offline): should catch up using historical data
-
-    // XXX should execute CalculateOnlineMetricsJob
 }
