@@ -17,6 +17,8 @@ public class MetricsServiceImpl implements MetricsService
     public void calculateEventMetrics(Date startingFrom, Date endingAt)
     {
         System.out.println(">>>> calculateEventMetrics( " + startingFrom.toString() + " , " + endingAt.toString() + " )");
+
+        // TODO implement the actual logic(see README.md for details)
     }
 
     @Override
@@ -29,5 +31,7 @@ public class MetricsServiceImpl implements MetricsService
             System.out.println(">>>> calculateOnlineMetrics() - TRANSIENT EXCEPTION...");
             throw new TransientException("This kind of problem can sometimes happen!");
         }
+
+        // TODO implement the actual logic(see README.md for details)
     }
 }

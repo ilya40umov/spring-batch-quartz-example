@@ -18,6 +18,7 @@ package org.ilya40umov.batch.mains;
 import org.ilya40umov.batch.configurations.SchedulerRunnerConfiguration;
 import org.ilya40umov.batch.scheduled.CalculateEventMetricsScheduledJob;
 import org.ilya40umov.batch.scheduled.CalculateOnlineMetricsScheduledJob;
+import org.ilya40umov.batch.scheduled.LongRunningBatchScheduledJob;
 import org.quartz.*;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
@@ -26,6 +27,7 @@ import java.util.TimeZone;
 
 import static org.quartz.CronScheduleBuilder.cronSchedule;
 import static org.quartz.JobBuilder.newJob;
+import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 /**
@@ -53,6 +55,7 @@ public class SchedulerRunner
     {
         scheduleCalculateEvent();
         scheduleCalculateOnlineMetrics();
+        scheduleLongRunningBatch();
         scheduler.start();
     }
 
@@ -87,7 +90,21 @@ public class SchedulerRunner
         scheduleJobWithTriggerIfNotPresent(job, trigger);
     }
 
-    private void scheduleJobWithTriggerIfNotPresent(JobDetail job, CronTrigger trigger) throws SchedulerException
+    private void scheduleLongRunningBatch() throws SchedulerException
+    {
+        JobDetail job = newJob(LongRunningBatchScheduledJob.class)
+                .withIdentity("longRunningBatchScheduledJob", "MetricsCollectors")
+                .requestRecovery(true)
+                .build();
+        Trigger trigger = newTrigger()
+                .withIdentity("triggerFor_longRunningBatchScheduledJob", "MetricsCollectors")
+                .withSchedule(simpleSchedule().withIntervalInMilliseconds(500L))
+                .forJob(job.getKey())
+                .build();
+        scheduleJobWithTriggerIfNotPresent(job, trigger);
+    }
+
+    private void scheduleJobWithTriggerIfNotPresent(JobDetail job, Trigger trigger) throws SchedulerException
     {
         if (!scheduler.checkExists(job.getKey()) && !scheduler.checkExists(trigger.getKey()))
         {

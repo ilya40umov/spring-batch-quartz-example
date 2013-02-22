@@ -16,7 +16,10 @@
 package org.ilya40umov.batch.scheduled;
 
 import org.springframework.batch.core.configuration.JobRegistry;
+import org.springframework.batch.core.explore.JobExplorer;
 import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.launch.JobOperator;
+import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.context.ApplicationContext;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
@@ -47,4 +50,18 @@ public abstract class AbstractScheduledJob extends QuartzJobBean
         return applicationContext.getBean(JobLauncher.class);
     }
 
+    protected JobExplorer getJobExplorer()
+    {
+        return applicationContext.getBean(JobExplorer.class);
+    }
+
+    protected JobOperator getJobOperator()
+    {
+        return applicationContext.getBean(JobOperator.class);
+    }
+
+    protected JobRepository getJobRepository()
+    {
+        return applicationContext.getBean(JobRepository.class);
+    }
 }

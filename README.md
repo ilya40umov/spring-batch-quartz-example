@@ -78,9 +78,18 @@ Start at least one instance of SchedulerRunner. See how misfired executions are 
 
 <b>Use case:</b> Make sure that if a node executing a certain job goes down, the job is automatically repeated/re-started.
 
-TODO: verify and document
+<b>How supported/implemented:</b> This use case is tricky because a server crash is likely to leave the job in unknown state(especially if it
+writes data into non-transactional storage like Mongo). For now I assume the simplest use-case where the job just have to be restarted and we can
+ignore the fact of possible data collisions. Using requestRecovery feature from Quartz and SYNCHRONOUS executor(which uses Quartz thread for
+performing batch processing) we can rely on Quartz in terms of identifying crashed jobs and re-invoking them on a different node(or on the same one
+ if it's up and the first one to identify the problem).
 
-XXX (?Quartz requestRecovery feature or Spring Batch ?)
+<b>NOTE:</b> I think that a more smooth transition for job recovery can be made by storing job state in ExecutionContext which will be picked up by
+ Spring Batch when you create a new execution for the same job instance.
+
+<b>Steps to verify:</b> Run init.sql. Start one instance of ActivityEmulator(optional). Start several instances of SchedulerRunner.
+Look at the logs and find out which SchedulerRunner is running LongRunningBatchScheduledJob, kill it. See how after a while another job logs the
+message that it's picked up the job(it can also be verified in DB by looking at executions table).
 
 ### Spring Batch: Retries Support ###
 

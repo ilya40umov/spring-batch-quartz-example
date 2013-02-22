@@ -41,6 +41,7 @@
 
     <bean id="calculateEventMetricsTask" class="org.ilya40umov.batch.tasks.CalculateEventMetricsTask"/>
     <bean id="calculateOnlineMetricsTask" class="org.ilya40umov.batch.tasks.CalculateOnlineMetricsTask"/>
+    <bean id="longRunningBatchTask" class="org.ilya40umov.batch.tasks.LongRunningBatchTask"/>
 
     <batch:job id="calculateEventMetricsJob">
         <batch:step id="calculateEventMetrics">
@@ -48,9 +49,15 @@
         </batch:step>
     </batch:job>
 
-    <batch:job id="calculateOnlineMetricsJob" xmlns="http://www.springframework.org/schema/batch">
+    <batch:job id="calculateOnlineMetricsJob">
         <batch:step id="calculateOnlineMetrics">
             <tasklet ref="calculateOnlineMetricsTask"/>
+        </batch:step>
+    </batch:job>
+
+    <batch:job id="longRunningBatchJob">
+        <batch:step id="longRunningBatchStep">
+            <tasklet ref="longRunningBatchTask"/>
         </batch:step>
     </batch:job>
 
