@@ -108,10 +108,25 @@ class was retried by RetryOperationsInterceptor.
 list of all jobs which are being executed at the moment, history of all job executions(with parameters and execution results success/failure),
 list of all scheduled jobs(e.g. next time a particular job runs etc.).
 
+<b>How supported/implemented:</b> In fact all this information can be obtained from Quartz and Spring Batch abstractions in java code. For some
+cases you can look into DB and find out the status of running jobs, history etc. There is also Spring Batch Admin web-app which can be used for
+this purpose.
+
+<b>Steps to verify:</b> see 'How supported/implemented' section.
+
+## Un-Addressed Scenarios ##
+
 ### General: Execution Management ###
 
-How do I manually re-execute a particular job(with given parameters) if it fails completely(i.e. no luck after N retries)?
+<b>Q:</b> How do I manually re-execute a particular job(with given parameters) if it fails completely(i.e. no luck after N auto-retries)?
+
+<b>A:</b> Not implemented at the moment. In fact we should consider using JMS in order to deliver a command to a cluster of batch processing nodes.
+ Then a JMS listener will trigger a specified Spring Batch job.
 
 ### General: Graceful Halt ###
 
-How can I signal to all nodes to stop, so that I can deploy a new version of software, do maintenance etc.?
+<b>Q:</b> How can I signal to all nodes to stop, so that I can deploy a new version of software, do maintenance etc.?
+
+<b>A:</b> I think this is also should be done via JMS message(send to a topic!). Upon receiving of a message each node should: a) stop Quartz b)
+wait for all nodes which don't support re-start c) stop all nodes which support re-start (the jobs which can save the point where they left and
+resume from that point). Also see http://numberformat.wordpress.com/tag/batch/ for some info on graceful stop.
