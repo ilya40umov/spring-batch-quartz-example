@@ -16,10 +16,10 @@ Spring Framework(IoC, JDBC, Transactions, etc.), Quartz Scheduler, Spring Batch,
 
 The application contains two "main" classes:
 
-1) org.ilya40umov.batch.mains.ActivityEmulator does exactly what it's supposed to, it emulates some activity from users. This part is only needed to
+1) org.sbq.batch.mains.ActivityEmulator does exactly what it's supposed to, it emulates some activity from users. This part is only needed to
 keep adding some new data to DB. You should run only one instance of this class(meaning that this part does not deal with clustering).
 
-2) org.ilya40umov.batch.mains.SchedulerRunner is meant to be run in multiple instances concurrently in order to simulate a bunch of nodes in a cluster.
+2) org.sbq.batch.mains.SchedulerRunner is meant to be run in multiple instances concurrently in order to simulate a bunch of nodes in a cluster.
 
 ### Simulated environment ###
 

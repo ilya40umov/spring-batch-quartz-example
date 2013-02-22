@@ -39,9 +39,9 @@
         <property name="jobRegistry" ref="jobRegistry"/>
     </bean>
 
-    <bean id="calculateEventMetricsTask" class="org.ilya40umov.batch.tasks.CalculateEventMetricsTask"/>
-    <bean id="calculateOnlineMetricsTask" class="org.ilya40umov.batch.tasks.CalculateOnlineMetricsTask"/>
-    <bean id="longRunningBatchTask" class="org.ilya40umov.batch.tasks.LongRunningBatchTask"/>
+    <bean id="calculateEventMetricsTask" class="org.sbq.batch.tasks.CalculateEventMetricsTask"/>
+    <bean id="calculateOnlineMetricsTask" class="org.sbq.batch.tasks.CalculateOnlineMetricsTask"/>
+    <bean id="longRunningBatchTask" class="org.sbq.batch.tasks.LongRunningBatchTask"/>
 
     <batch:job id="calculateEventMetricsJob">
         <batch:step id="calculateEventMetrics">
@@ -96,7 +96,7 @@
 
     <aop:config>
         <aop:pointcut id="anyExecutionOfTask"
-                      expression="execution(* org.ilya40umov.batch.service..*.*(..))"/>
+                      expression="execution(* org.sbq.batch.service..*.*(..))"/>
         <aop:advisor pointcut-ref="anyExecutionOfTask"
                      advice-ref="retryAdvice" order="-1"/>
     </aop:config>
